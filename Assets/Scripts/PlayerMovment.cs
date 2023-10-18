@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerMovment : MonoBehaviour
 {
     public int RotationSpeed = 20;
-    [SerializeField] private int Dir=+1;
+     private int RotationDir=+1;
     private Animator anim;
     private Rigidbody2D rb;
     [SerializeField]private Transform targetObject;
@@ -14,31 +14,37 @@ public class PlayerMovment : MonoBehaviour
 
     public void Start()
     {
+
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
     }
     void Update()
     {
-        transform.Rotate(0,0, Dir*5 * RotationSpeed *Time.deltaTime);
-        
+        transform.Rotate(0,0, RotationDir*5 * RotationSpeed *Time.deltaTime);
+        PlayerPrefs.SetInt("movingSpeed", movingSpeed);
     }
     public void mouseclick()
     {
         Vector3 direction = targetObject.position - transform.position;
-        direction.Normalize();
-        rb.AddForce(direction*movingSpeed);
+        rb.AddForce(direction*movingSpeed,ForceMode2D.Impulse);
+        //Debug.Log("speed "+direction * movingSpeed / 5);
         //transform.position= Vector2.MoveTowards(transform.position,targetObject.position,movingSpeed*Time.deltaTime);
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(Dir==+1)
+        if(RotationDir ==+1)
         {
-            Dir = -1;
+            RotationDir = -1;
         }
         else
         {
-            Dir = +1;
+            RotationDir = +1;
         }
+        if(collision.gameObject.tag=="Danger")
+        {
+            Dead();
+        }
+
     }
     private void OnTriggerExit2D()
     {
