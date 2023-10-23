@@ -22,7 +22,7 @@ public class CameraPosition : MonoBehaviour
             }
         }
         Vector3 desiredPosition = target[index].position;
-        Debug.Log("index of target "+target[index].position+"  index : "+ index);
+        //Debug.Log("index of target "+target[index].position+"  index : "+ index);
         Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
         transform.position = new Vector3(smoothedPosition.x, smoothedPosition.y, transform.position.z);
     }

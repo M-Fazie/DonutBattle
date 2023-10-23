@@ -24,7 +24,7 @@ public class raycast : MonoBehaviour
         //Debug.DrawLine(transform.position, rayDirection);
         if (hit.collider != null)
         {            
-            Debug.Log("Raycast hit " + hit.transform.name);
+            //Debug.Log("Raycast hit " + hit.transform.name);
             if (hit.collider.gameObject.tag == "Enemy"&& check)
             {               
                  check = false;
@@ -34,7 +34,7 @@ public class raycast : MonoBehaviour
     }
     IEnumerator AutoMove()
     {
-        Debug.Log("hi whats up bro");
+        //Debug.Log("hi whats up bro");
         int movingSpeed = PlayerPrefs.GetInt("movingSpeed");
         Vector3 direction = rayDir.position - transform.position;        
         rb.AddForce(direction * movingSpeed, ForceMode2D.Impulse);

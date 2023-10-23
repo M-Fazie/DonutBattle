@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
+
 using UnityEngine;
 
 public class PlayerMovment : MonoBehaviour
@@ -42,6 +42,7 @@ public class PlayerMovment : MonoBehaviour
         }
         if(collision.gameObject.tag=="Danger")
         {
+
             Dead();
         }
 
@@ -59,6 +60,11 @@ public class PlayerMovment : MonoBehaviour
     }
     public void Dead()
     {
+        PlayerPrefs.SetInt("IsPlayerDead", 1);
+        PlayerPrefs.SetString("PlayerName", gameObject.name);
+        {
+            Debug.Log("player 1 dead  !!!!!!!!!!!!!!1" + gameObject.name);
+        }
         this.gameObject.SetActive(false);
     }
 }
