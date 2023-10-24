@@ -11,13 +11,14 @@ public class raycast : MonoBehaviour
     public LayerMask layer;
     public Rigidbody2D rb;
     private bool check = true;
-    
+    private int IsPlay;
     void Start()
     {
         rb.GetComponent<Rigidbody2D>();
     }
     private void Update()
-    {        
+    {
+        IsPlay = PlayerPrefs.GetInt("IsPlay", 0);
         Vector2 rayDirection = rayDir.position;
         RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDirection, raycastDistance,layer);
         Debug.DrawRay(transform.position,rayDirection, Color.yellow);
@@ -25,7 +26,7 @@ public class raycast : MonoBehaviour
         if (hit.collider != null)
         {            
             //Debug.Log("Raycast hit " + hit.transform.name);
-            if (hit.collider.gameObject.tag == "Enemy"&& check)
+            if (hit.collider.gameObject.tag == "Enemy"&& check && IsPlay==1)
             {               
                  check = false;
                  StartCoroutine(AutoMove());

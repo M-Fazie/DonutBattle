@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject Panel,SelectionPanel,PlayBtn,Shop;
     private int playerCount=0;
     private int playerNumber;
-
+    public int[] spriteIndex;
     public void PlayerCount(int number)
     {
         playerNumber = number;
@@ -26,10 +26,13 @@ public class GameManager : MonoBehaviour
     }
     public void playerSelection(int index)
     {
+        spriteIndex[playerCount] = index;
+        PlayerPrefs.SetString("spriteIndex", index.ToString()+" "+ PlayerPrefs.GetString("spriteIndex"));
         playerCount += 1;
+        
         //for(int y=0; y < Players.Length; y++)
         if (playerCount<=playerNumber)
-        {           
+        {
             Sprites[index].GetComponent<Button>().interactable = false;
             //Players[playerCount - 1].GetComponentInChildren<Button>().GetComponentInChildren<Image>().sprite;
             PlayerImage[playerCount-1].sprite = Sprites[index].GetComponent<Image>().sprite;

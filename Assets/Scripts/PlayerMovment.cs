@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerMovment : MonoBehaviour
 {
-    public int RotationSpeed = 20;
+    public int RotationSpeed = 20,IsPlay;
      private int RotationDir=+1;
     private Animator anim;
     private Rigidbody2D rb;
@@ -14,13 +14,18 @@ public class PlayerMovment : MonoBehaviour
 
     public void Start()
     {
-
+        
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
     }
     void Update()
     {
-        transform.Rotate(0,0, RotationDir*5 * RotationSpeed *Time.deltaTime);
+        IsPlay = PlayerPrefs.GetInt("IsPlay", 0);
+        if (IsPlay==1)
+        {
+            transform.Rotate(0, 0, RotationDir * 5 * RotationSpeed * Time.deltaTime);
+        }
+        
         PlayerPrefs.SetInt("movingSpeed", movingSpeed);
     }
     public void mouseclick()
@@ -49,7 +54,7 @@ public class PlayerMovment : MonoBehaviour
     }
     private void OnTriggerExit2D()
     {
-        anim.SetBool("Danger", true);
+         anim.SetBool("Danger", true);       
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -60,11 +65,9 @@ public class PlayerMovment : MonoBehaviour
     }
     public void Dead()
     {
+        
         PlayerPrefs.SetInt("IsPlayerDead", 1);
-        PlayerPrefs.SetString("PlayerName", gameObject.name);
-        {
-            Debug.Log("player 1 dead  !!!!!!!!!!!!!!1" + gameObject.name);
-        }
+        //Debug.Log("player 1 dead  !!!!!!!!!!!!!!1" + gameObject.name);
         this.gameObject.SetActive(false);
     }
 }
