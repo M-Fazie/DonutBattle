@@ -37,6 +37,7 @@ public class raycast : MonoBehaviour
     {
         //Debug.Log("hi whats up bro");
         int movingSpeed = PlayerPrefs.GetInt("movingSpeed");
+        movingSpeed = movingSpeed + Random.Range(4, 9);
         Vector3 direction = rayDir.position - transform.position;        
         rb.AddForce(direction * movingSpeed, ForceMode2D.Impulse);
         //transform.position= Vector2.MoveTowards(transform.position,targetObject.position,movingSpeed*Time.deltaTime);

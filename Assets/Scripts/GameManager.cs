@@ -13,6 +13,10 @@ public class GameManager : MonoBehaviour
     private int playerCount=0;
     private int playerNumber;
     public int[] spriteIndex;
+    public void Start()
+    {
+        PlayerPrefs.SetString("spriteIndex","");
+    }
     public void PlayerCount(int number)
     {
         playerNumber = number;
@@ -27,7 +31,7 @@ public class GameManager : MonoBehaviour
     public void playerSelection(int index)
     {
         spriteIndex[playerCount] = index;
-        PlayerPrefs.SetString("spriteIndex", index.ToString()+" "+ PlayerPrefs.GetString("spriteIndex"));
+        PlayerPrefs.SetString("spriteIndex", PlayerPrefs.GetString("spriteIndex") + " " +  index.ToString());
         playerCount += 1;
         
         //for(int y=0; y < Players.Length; y++)

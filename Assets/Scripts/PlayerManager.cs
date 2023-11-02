@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -19,23 +20,31 @@ public class PlayerManager : MonoBehaviour
     private float time = 4;
     public string[] spriteIndexArray;
     private bool enter = true;
+    [SerializeField] private GameObject[] level;
+
     void Start()
     {
+        level[Random.Range(0, level.Length)].SetActive(true);
         PlayerPrefs.SetInt("IsPlay", 0);
         LoadingPanelOpen();
         string str = PlayerPrefs.GetString("spriteIndex");
-        spriteIndexArray = str.Split(' ');
+        Debug.Log(str);
+        str.Trim();
+        spriteIndexArray = str.Split(" ");
         //for(int r=0; r < PlayerNumber; r++)
         //{
         //    spriteIndexArray[r] = arraystring[r];
         //}
         //spriteIndexArray = GameObject.FindGameObjectWithTag("gameManager").gameObject.GetComponent<GameManager>().spriteIndex;
+        Debug.Log(spriteIndexArray.Length);
         PlayerNumber =PlayerPrefs.GetInt("playerNumber");
         for(int i =0; i<PlayerNumber; i++)
         {
+            Debug.Log(spriteIndexArray[i]);
             //Debug.Log(gameManager.spriteIndex[i]);
             button[i].interactable = true;
-            player[i].GetComponent<SpriteRenderer>().sprite = sprite[int.Parse(spriteIndexArray[i].Trim())];
+            int temp = int.Parse(spriteIndexArray[i+1]);
+            player[i].GetComponent<SpriteRenderer>().sprite = sprite[temp];
         }
         
         for (int i = PlayerNumber; i <4; i++)
@@ -50,7 +59,8 @@ public class PlayerManager : MonoBehaviour
     public void Update()
     {
         time = time-Time.deltaTime;
-        loadingPanelText.text = time.ToString();
+        int intvalue = (int)time;
+        loadingPanelText.text = intvalue.ToString();
         
         if (time <= 0&& enter)
         {
@@ -78,7 +88,6 @@ public class PlayerManager : MonoBehaviour
             {
                 button[3].interactable = false;
             }
-
             GameObject[] temp =GameObject.FindGameObjectsWithTag("Enemy");
             Debug.Log("enemys count : "+ temp.Length);
             if(temp.Length<=1)
@@ -88,8 +97,7 @@ public class PlayerManager : MonoBehaviour
                 string name=GameObject.FindGameObjectWithTag("Winner").name;
                 Debug.Log(name);
                 winPanelText.text = name + " WINNER!";
-                winnerSprite.sprite= GameObject.FindGameObjectWithTag("Winner").GetComponent<SpriteRenderer>().sprite;
-                
+                winnerSprite.sprite= GameObject.FindGameObjectWithTag("Winner").GetComponent<SpriteRenderer>().sprite;               
             }
         }       
     }

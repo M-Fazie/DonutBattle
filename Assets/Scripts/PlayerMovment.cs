@@ -25,7 +25,10 @@ public class PlayerMovment : MonoBehaviour
         {
             transform.Rotate(0, 0, RotationDir * 5 * RotationSpeed * Time.deltaTime);
         }
-        
+        if(this.gameObject.tag == "Winner")
+        {
+            anim.SetBool("Danger", false);
+        }
         PlayerPrefs.SetInt("movingSpeed", movingSpeed);
     }
     public void mouseclick()
@@ -45,7 +48,7 @@ public class PlayerMovment : MonoBehaviour
         {
             RotationDir = +1;
         }
-        if(collision.gameObject.tag=="Danger")
+        if(collision.gameObject.tag=="Danger"&& this.gameObject.tag=="Enemy")
         {
 
             Dead();
@@ -58,14 +61,13 @@ public class PlayerMovment : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag=="SafeZone")
+        if(collision.tag=="SafeZone" )
         {
             anim.SetBool("Danger", false);
         }
     }
     public void Dead()
     {
-        
         PlayerPrefs.SetInt("IsPlayerDead", 1);
         //Debug.Log("player 1 dead  !!!!!!!!!!!!!!1" + gameObject.name);
         this.gameObject.SetActive(false);
